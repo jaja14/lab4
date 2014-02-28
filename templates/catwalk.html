@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8">
+  <title>Cat Walk</title>
+  <script type="text/javascript" src="{{url_for('static', filename='sound.js') }}"></script>
+
+ <body>
+  <audio id="catSound" hidden="true">
+  	<source src="{{url_for('static', filename='meow.wav') }}" >
+  	<source src="{{url_for('static', filename='meow.ogg') }}" >
+  </audio>
+  <img id="cat" style="position: absolute; left: 920px;" src = "{{ url_for('static', filename='cat.gif') }}" onMouseOver="sound()">
+
+  <script>
+ 
+//localStorage.clear();
+  var img = document.getElementsByTagName('img')[0];
+  
+   var audioElement = document.createElement('audio');
+audioElement.setAttribute('src', "{{url_for('static', filename='meow.wav') }}");
+//audioElement.volume=100;
+
+  
+  
+  
+if (!localStorage.getItem("location-left"))
+img.style.left = '0px';
+else 
+img.style.left = localStorage.getItem("location-left") + 'px';
+
+
+var walksForward;// = true;
+
+walksForward = localStorage.getItem("direction-forward");
+
+function catWalk() {
+  //var currentLeft;
+  //if (!localStorage.getItem("location-left")) 
+  var currentLeft = parseInt(img.style.left);
+  //} else
+  //currentLeft = localStorage.getItem("location-left");
+  if ((currentLeft > (window.innerWidth-img.width))) {
+    walksForward = false;
+    localStorage.setItem("direction-forward", walksForward);  
+  }
+  if ((currentLeft <= 0)) {
+    walksForward = true;
+    localStorage.setItem("direction-forward", walksForward);  
+  }
+ 
+  if (walksForward) {
+    img.style.left = (currentLeft + 10) + 'px';
+  } else {
+    img.style.left = (currentLeft - 10) + 'px';
+  }
+localStorage.setItem("location-left", currentLeft);
+localStorage.setItem("direction-forward", walksForward);  
+  }
+window.setInterval(catWalk, 50);
+  </script>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<!-- saved from url=(0054)http://www.teaching-materials.org/storage/madlibs.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8">
+  <title></title>
+ <script type=text/javascript async="" src="{{url_for('static', filename='ga.js') }}"></script>
+<script type=text/javascript async="" src="{{url_for('static', filename='gt.js') }}"></script>
+<img style="position: absolute; left: 920px;" src = "{{ url_for('static', filename='pixel.gif') }}">
+
+ 
+ <body>
+ 
+ <h1>Mad Libs</h1>
+ 
+ <ul>
+  <li>Noun: <input type="text" id="noun"></li>
+  <li>Adjective: <input type="text" id="adjective"></li>
+  <li>Someone's Name: <input type="text" id="namething"></li>
+ </ul>
+ 
+ <button id="lib-button">Lib it!</button>
+  
+ <div id="story"></div>
+  
+  <script>
+  var name1 = document.getElementById("namething");
+  
+  var adjective = document.getElementById("adjective");
+  
+  var noun = document.getElementById("noun");
+  
+  window.onload = function()
+  {
+  if (localStorage.getItem("namelocals"))
+			name1.value = localStorage.getItem("namelocals");
+
+  if (localStorage.getItem("adjectivels"))
+			adjective.value = localStorage.getItem("adjectivels");  
+  
+    if (localStorage.getItem("nounls"))
+			noun.value = localStorage.getItem("nounls");
+			
+			}
+
+  
+  
+  name1.onchange = function(){
+  localStorage.setItem("namelocals",name1.value);
+  }
+  
+  adjective.onchange = function(){
+  localStorage.setItem("adjectivels",adjective.value);
+  }
+  noun.onchange = function(){
+  localStorage.setItem("nounls",noun.value);
+  }
+  
+  
+  var libarr = new Array();
+function libIt() {
+  var name1 = document.getElementById("namething").value;
+  var adjective = document.getElementById("adjective").value;
+  var noun = document.getElementById("noun").value;
+  
+  var storyDiv = document.getElementById("story");
+  storyDiv.innerHTML = name + " married a " + adjective + " " + noun + "... So weird!";
+  libarr.push(name1 + " married a " + adjective + " " + noun + "... So weird!");
+  localStorage.setItem("Libs",libarr);
+  storyDiv.innerHTML = localStorage.getItem("Libs");
+  }
+
+var libButton = document.getElementById('lib-button');
+libButton.addEventListener('click', libIt);
+	</script>
